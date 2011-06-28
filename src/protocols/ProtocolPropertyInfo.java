@@ -34,7 +34,7 @@ public class ProtocolPropertyInfo extends BaseFeatureInfo implements IPropertyIn
       @Override
       public Object getValue( Object ctx )
       {
-        ((ProtocolType)getOwnersType()).verify();
+        ((IProtocolType)getOwnersType()).verify();
         IType iType = TypeSystem.getFromObject( ctx );
         IPropertyInfo property = iType.getTypeInfo().getProperty( _name );
         return property.getAccessor().getValue( ctx );
@@ -43,7 +43,7 @@ public class ProtocolPropertyInfo extends BaseFeatureInfo implements IPropertyIn
       @Override
       public void setValue( Object ctx, Object value )
       {
-        ((ProtocolType)getOwnersType()).verify();
+        ((IProtocolType)getOwnersType()).verify();
         IType iType = TypeSystem.getFromObject( ctx );
         IPropertyInfo property = iType.getTypeInfo().getProperty( _name );
         property.getAccessor().setValue( ctx, value );

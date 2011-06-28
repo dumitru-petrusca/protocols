@@ -23,7 +23,7 @@ public class ProtocolTypeInfo extends BaseTypeInfo implements ITypeInfo
   private List<IMethodInfo> _methods;
   private Map<String, IPropertyInfo> _properties;
 
-  public ProtocolTypeInfo( ProtocolType protocolType )
+  public ProtocolTypeInfo( IProtocolType protocolType )
   {
     super( protocolType );
     _methods = new ArrayList<IMethodInfo>();
@@ -49,7 +49,7 @@ public class ProtocolTypeInfo extends BaseTypeInfo implements ITypeInfo
     }
   }
 
-  private void addSpecialMethods( final ProtocolType protocolType )
+  private void addSpecialMethods( final IProtocolType protocolType )
   {
     IMethodInfo isConformedToBy = new MethodInfoBuilder()
       .withName( "isConformedToBy" )
@@ -61,7 +61,7 @@ public class ProtocolTypeInfo extends BaseTypeInfo implements ITypeInfo
         @Override
         public Object handleCall( Object ctx, Object... args )
         {
-          ((ProtocolType)getOwnersType()).verify();
+          getOwnersType().verify();
           Object arg = args[0];
           IType iType = TypeSystem.getFromObject( arg );
           return protocolType.isAssignableFrom( iType );
@@ -79,7 +79,7 @@ public class ProtocolTypeInfo extends BaseTypeInfo implements ITypeInfo
         @Override
         public Object handleCall( Object ctx, Object... args )
         {
-          ((ProtocolType)getOwnersType()).verify();
+          getOwnersType().verify();
           Object arg = args[0];
           IType iType = TypeSystem.getFromObject( arg );
           if( protocolType.isAssignableFrom( iType ) )
@@ -121,8 +121,8 @@ public class ProtocolTypeInfo extends BaseTypeInfo implements ITypeInfo
   }
 
   @Override
-  public ProtocolType getOwnersType()
+  public IProtocolType getOwnersType()
   {
-    return (ProtocolType)super.getOwnersType();
+    return (IProtocolType)super.getOwnersType();
   }
 }

@@ -27,7 +27,7 @@ public class ProtocolType extends TypeBase implements IProtocolType
   private String _name;
   private volatile ProtocolTypeInfo _typeInfo;
   private List<ProtocolError> _errors;
-  private List<ProtocolType> _innerProtocols;
+  private List<IProtocolType> _innerProtocols;
   private ProtocolType _outer;
   private Object _source;
 
@@ -54,7 +54,7 @@ public class ProtocolType extends TypeBase implements IProtocolType
     _name = name;
     _source = source;
     _errors = new ArrayList<ProtocolError>();
-    _innerProtocols = new ArrayList<ProtocolType>();
+    _innerProtocols = new ArrayList<IProtocolType>();
     _typeInfo = null;
   }
 
@@ -104,7 +104,7 @@ public class ProtocolType extends TypeBase implements IProtocolType
       {
         if( _typeInfo == null )
         {
-          _typeInfo = new ProtocolTypeInfo( this );
+          _typeInfo = new ProtocolTypeInfo((IProtocolType) TypeSystem.getOrCreateTypeReference(this));
         }
       }
       finally
@@ -233,14 +233,14 @@ public class ProtocolType extends TypeBase implements IProtocolType
     return _outer != null;
   }
 
-  ProtocolType getNextInnerProtocol( ISourceCodeTokenizer tokenizer )
+  public IProtocolType getNextInnerProtocol(ISourceCodeTokenizer tokenizer)
   {
-    ProtocolType type = new ProtocolType( this, getName() + "$" + _innerProtocols.size(), tokenizer );
+    IProtocolType type = (IProtocolType) TypeSystem.getOrCreateTypeReference(new ProtocolType(this, getName() + "$" + _innerProtocols.size(), tokenizer));
     _innerProtocols.add( type );
     return type;
   }
 
-  void setTypeInfo( final ProtocolTypeInfo typeInfo )
+  public void setTypeInfo(final ProtocolTypeInfo typeInfo)
   {
     _typeInfo = typeInfo;
   }

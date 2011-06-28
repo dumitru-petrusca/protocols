@@ -27,11 +27,11 @@ import java.util.List;
 public class ProtocolParser
 {
   private IGosuParser _gosuParser;
-  private ProtocolType _protocol;
+  private IProtocolType _protocol;
   private HashSet<ProtocolMethodDescriptor> _methods;
   private HashMap<String, ProtocolPropertyDescriptor> _properties;
 
-  public ProtocolParser(ProtocolType protocol)
+  public ProtocolParser(IProtocolType protocol)
   {
     _protocol = protocol;
     _methods = new HashSet<ProtocolMethodDescriptor>();
@@ -66,7 +66,7 @@ public class ProtocolParser
     parseProtocol();
   }
 
-  private ProtocolType getProtocol()
+  private IProtocolType getProtocol()
   {
     return _protocol;
   }
@@ -190,7 +190,7 @@ public class ProtocolParser
     if( match( new Token(), "protocol" ) )
     {
       verify( covariantPosition, ProtocolMessages.PROTO_CANNOT_NEST_PROTOCOLS_HERE );
-      ProtocolType innerProtocol = getProtocol().getNextInnerProtocol( getTokenizer() );
+      IProtocolType innerProtocol = getProtocol().getNextInnerProtocol( getTokenizer() );
       ProtocolParser innerParser = new ProtocolParser( innerProtocol );
       innerParser.parseInnerProtocol( this );
       ProtocolTypeInfo innerTypeInfo = new ProtocolTypeInfo( innerProtocol );

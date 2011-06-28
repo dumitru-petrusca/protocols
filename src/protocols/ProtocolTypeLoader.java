@@ -23,12 +23,10 @@ public class ProtocolTypeLoader extends TypeLoaderBase implements ITypeLoader
 {
   private IModule _module;
   private LazyVar<Set<? extends CharSequence>> _allTypeNames;
-  private IResourceAccess _resourceAccess;
 
-  public ProtocolTypeLoader( IModule module, IResourceAccess resourceAccess )
+  public ProtocolTypeLoader( IModule module )
   {
     _module = module;
-    _resourceAccess = resourceAccess;
     _allTypeNames = new LazyVar<Set<? extends CharSequence>>()
     {
       @Override
@@ -53,13 +51,11 @@ public class ProtocolTypeLoader extends TypeLoaderBase implements ITypeLoader
     return _module;
   }
 
-  @Override
   public IType getIntrinsicType( Class javaClass )
   {
     return null;
   }
 
-  @Override
   public IType getIntrinsicType( IJavaClassInfo javaClassInfo )
   {
     return null;
@@ -78,7 +74,7 @@ public class ProtocolTypeLoader extends TypeLoaderBase implements ITypeLoader
         IFile file = _module.getResourceAccess().findFirstFile( name );
         if( file != null )
         {
-          return new ProtocolType( this, fullyQualifiedName, file );
+          return TypeSystem.getOrCreateTypeReference(new ProtocolType( this, fullyQualifiedName, file ));
         }
       }
       else
@@ -166,8 +162,7 @@ public class ProtocolTypeLoader extends TypeLoaderBase implements ITypeLoader
   }
 
   @Override
-  public List<Throwable> getInitializationErrors()
-  {
-    return null;
+  public boolean handlesNonPrefixLoads() {
+    return true;
   }
 }

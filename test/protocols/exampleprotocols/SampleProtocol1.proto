@@ -1,0 +1,5 @@
+package protocols.exampleprotocols
+
+protocol SampleProtocol1 {
+  function foo() : int
+}

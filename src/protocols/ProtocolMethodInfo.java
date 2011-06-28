@@ -137,7 +137,7 @@ public class ProtocolMethodInfo extends BaseFeatureInfo implements IMethodInfo
     @Override
     public Object handleCall( Object ctx, Object... args )
     {
-      ((ProtocolType)getOwnersType()).verify();
+      ((IProtocolType)getOwnersType()).verify();
       IType iType = TypeSystem.getFromObject( ctx );
       IMethodInfo delegateMethod = ITypeInfo.FIND.callableMethod( iType.getTypeInfo().getMethods(), _name, _paramTypes );
       return delegateMethod.getCallHandler().handleCall( ctx, args );

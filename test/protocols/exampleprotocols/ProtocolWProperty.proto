@@ -1,0 +1,5 @@
+package protocols.exampleprotocols
+
+protocol ProtocolWProperty {
+  property Prop1 : int
+}
