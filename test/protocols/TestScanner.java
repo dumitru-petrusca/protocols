@@ -5,7 +5,7 @@ import gw.lang.reflect.TypeSystem;
 import gw.lang.reflect.gs.IGosuClass;
 import gw.lang.shell.Gosu;
 import org.junit.Test;
-import org.junit.experimental.ParallelComputer;
+//import org.junit.experimental.ParallelComputer;
 import org.junit.internal.TextListener;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
@@ -40,8 +40,9 @@ public class TestScanner {
     }
     JUnitCore core = new JUnitCore();
     core.addListener(new TextListener(System.out));
-    Result result = core.run(new ParallelComputer(parallelClasses, parallelMethods), tests.toArray(new Class[tests.size()]));
-    return result;
+//    Result result = core.run(new ParallelComputer(parallelClasses, parallelMethods), tests.toArray(new Class[tests.size()]));
+//    return result;
+    throw new RuntimeException("ParallelComputer is in junit 4.8 while gosu uses junit 4.5");
   }
 
   private static void addTests(List<Class> tests, File testDir, File possibleTest) {

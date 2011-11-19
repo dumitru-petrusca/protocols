@@ -10,6 +10,7 @@ import gw.lang.reflect.ITypeLoader;
 import gw.lang.reflect.TypeBase;
 import gw.lang.reflect.TypeSystem;
 import gw.lang.reflect.java.IJavaType;
+import gw.lang.reflect.java.JavaTypes;
 import gw.util.GosuClassUtil;
 
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class ProtocolType extends TypeBase implements IProtocolType
   @Override
   public IType getSupertype()
   {
-    return IJavaType.OBJECT;
+    return JavaTypes.OBJECT();
   }
 
   @Override

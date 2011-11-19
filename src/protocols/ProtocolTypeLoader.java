@@ -7,9 +7,8 @@ import gw.lang.reflect.TypeLoaderBase;
 import gw.lang.reflect.TypeSystem;
 import gw.lang.reflect.java.IJavaClassInfo;
 import gw.lang.reflect.module.IModule;
-import gw.lang.reflect.module.IResourceAccess;
 import gw.util.Pair;
-import gw.util.concurrent.LazyVar;
+import gw.util.concurrent.LockingLazyVar;
 
 import java.io.File;
 import java.net.URL;
@@ -22,18 +21,18 @@ import java.util.Set;
 public class ProtocolTypeLoader extends TypeLoaderBase implements ITypeLoader
 {
   private IModule _module;
-  private LazyVar<Set<? extends CharSequence>> _allTypeNames;
+  private LockingLazyVar<Set<? extends CharSequence>> _allTypeNames;
 
   public ProtocolTypeLoader( IModule module )
   {
     _module = module;
-    _allTypeNames = new LazyVar<Set<? extends CharSequence>>()
+    _allTypeNames = new LockingLazyVar<Set<? extends CharSequence>>()
     {
       @Override
       protected Set<? extends CharSequence> init()
       {
         HashSet<CharSequence> set = new HashSet<CharSequence>();
-        List<Pair<String,IFile>> extension = _module.getResourceAccess().findAllFilesByExtension("proto");
+        List<Pair<String,IFile>> extension = _module.getFileRepository().findAllFilesByExtension("proto");
         for( Pair<String, IFile> strs : extension )
         {
           String path = strs.getFirst();
@@ -71,7 +70,7 @@ public class ProtocolTypeLoader extends TypeLoaderBase implements ITypeLoader
       {
         String outermostName = splitName.getFirst();
         String name = "/" + outermostName.replace( ".", "/" ) + ".proto";
-        IFile file = _module.getResourceAccess().findFirstFile( name );
+        IFile file = _module.getFileRepository().findFirstFile( name );
         if( file != null )
         {
           return TypeSystem.getOrCreateTypeReference(new ProtocolType( this, fullyQualifiedName, file ));

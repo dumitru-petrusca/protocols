@@ -14,6 +14,7 @@ import gw.lang.parser.statements.IUsesStatementList;
 import gw.lang.reflect.IType;
 import gw.lang.reflect.TypeSystem;
 import gw.lang.reflect.java.IJavaType;
+import gw.lang.reflect.java.JavaTypes;
 import gw.util.GosuExceptionUtil;
 import gw.util.Pair;
 import gw.util.StreamUtil;
@@ -73,14 +74,7 @@ public class ProtocolParser
 
   private void parseProtocol()
   {
-    try
-    {
-      getTokenizer().nextToken();
-    }
-    catch( IOException e )
-    {
-      throw GosuExceptionUtil.forceThrow( e );
-    }
+    getTokenizer().nextToken();
 
     verify( parsePackage(), ProtocolMessages.PROTO_EXPECTED_PACKAGE );
 
@@ -133,7 +127,7 @@ public class ProtocolParser
       log( "found method " + methodName );
       List<Pair<String, IType>> args = parseArgs();
       log( args.toString() );
-      IType returnType = IJavaType.pVOID;
+      IType returnType = JavaTypes.pVOID();
       if( match( null, ":", ISourceCodeTokenizer.TT_OPERATOR ) )
       {
         returnType = parseTypeLiteral( true );
@@ -266,14 +260,7 @@ public class ProtocolParser
   private void unexpectedToken()
   {
     addError( ProtocolMessages.PROTO_UNEXPECTED_TOKEN, getTokenizer().getTokenAsString() );
-    try
-    {
-      getTokenizer().nextToken();
-    }
-    catch( IOException e )
-    {
-      throw GosuExceptionUtil.forceThrow( e );
-    }
+    getTokenizer().nextToken();
   }
 
   private boolean verify( boolean test, ResourceKey resourceKey, Object... args )
@@ -444,14 +431,7 @@ public class ProtocolParser
 
     if( bMatch && !bPeek )
     {
-      try
-      {
-        tokenizer.nextToken();
-      }
-      catch( IOException e )
-      {
-        // ignore
-      }
+      tokenizer.nextToken();
     }
 
     return bMatch;
@@ -480,14 +460,7 @@ public class ProtocolParser
 
     if( bMatch && !bPeek )
     {
-      try
-      {
-        tokenizer.nextToken();
-      }
-      catch( IOException e )
-      {
-        // ignore
-      }
+      tokenizer.nextToken();
     }
 
     return bMatch;

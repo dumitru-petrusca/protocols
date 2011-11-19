@@ -10,6 +10,7 @@ import gw.lang.reflect.MethodInfoBuilder;
 import gw.lang.reflect.ParameterInfoBuilder;
 import gw.lang.reflect.TypeSystem;
 import gw.lang.reflect.java.IJavaType;
+import gw.lang.reflect.java.JavaTypes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +55,7 @@ public class ProtocolTypeInfo extends BaseTypeInfo implements ITypeInfo
     IMethodInfo isConformedToBy = new MethodInfoBuilder()
       .withName( "isConformedToBy" )
       .withStatic()
-      .withReturnType( IJavaType.pBOOLEAN )
+      .withReturnType( JavaTypes.pBOOLEAN() )
       .withParameters( new ParameterInfoBuilder().withName( "o" ).withType( Object.class ) )
       .withCallHandler( new IMethodCallHandler()
       {
